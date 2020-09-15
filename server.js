@@ -13,19 +13,6 @@ const port = 3000
 
 // Variable to create the Express application and create a new schema for Mongoose.
 const app = express()
-const { schema } = mongoose
-
-// Sets basic Schema for games that takes in properties for name, developer, publisher, platforms, release date, genre, description of game, and image of game.
-const gamesSchema = new mongoose.Schema({
-    name: String,
-    developer: String,
-    publisher: String,
-    platforms: [{type: String, name: String}],
-    release_date: Date,
-    genre: String,
-    description: String,
-    img: {type: Buffer, contentType: String}
-})
 
 /** Sets up new connection to local mongoose database using the new URL parser and unified topology options (current versions are deprecated for now). On error, console will display error and string for database connnection error. Success log different string for database connection.
  */
@@ -41,11 +28,11 @@ app.use(express.json())
 
 // Variables to allow routing for different REST endpoints. Currently routes to index and games
 const indexRouter = require('./routes/index')
-const gameRouter = require('./routes/game')
+const gameRouter = require('./routes/games')
 
 // Tells application to use the indexRouter to point to root and gameRouter to point to the '/game' route
 app.use('/', indexRouter)
-app.use('/game', gameRouter)
+app.use('/games', gameRouter)
 
 // Creates a server that listens with the app variable on the port; success displays message in console. On error, resulting error is logged to console
 app.listen(port, (err) => {
