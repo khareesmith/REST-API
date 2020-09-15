@@ -2,11 +2,9 @@
 require('dotenv').config()
 
 /** Basic variables to set-up creation of REST API application.
- * HTTP and HTTPS are used for server creation, 
  * Express is used as middleware for the application,
  * and Mongoose allows for interaction with MongoDB database.
  */
-const https = require('https')
 const express = require('express')
 const mongoose = require('mongoose')
 
@@ -38,10 +36,20 @@ db.once('open', () => {
     console.log('Database connected!')
 })
 
-// Creates an HTTP server that listens with the app variable on the second port; success displays message in console. On error, resulting error is logged to console
-https.createServer(
-    app.listen(port, (err) => {
+// Allows information passed through application to be used as JSON object
+app.use(express.json())
+
+// Variables to allow routing for different REST endpoints. Currently routes to index and games
+const indexRouter = require('./routes/index')
+const gameRouter = require('./routes/game')
+
+// Tells application to use the indexRouter to point to root and gameRouter to point to the '/game' route
+app.use('/', indexRouter)
+app.use('/game', gameRouter)
+
+// Creates a server that listens with the app variable on the port; success displays message in console. On error, resulting error is logged to console
+app.listen(port, (err) => {
     if (err) { console.error(err) }
-    else { console.log('HTTPS Server listening on port: ' + port) }
-}))
+    else { console.log('Server listening on port: ' + port) }
+})
 
