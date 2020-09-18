@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 // Route to get one game on the server
 router.get('/:id', getGame, async (req, res) => {
     try {
-    res.send(res.game)
+    await res.send(res.game)
     } catch (err) {
         res.status(500).json({message: err.message})
     }
@@ -54,6 +54,29 @@ router.delete('/:id',getGame, async (req, res) => {
 })
 
 // Route to update a game
+router.patch('/:id', getGame, async (req, res) => {
+    if (req.body.name != null) {
+        res.game.name = req.body.name
+    } if (req.body.developer != null) {
+        res.game.developer = req.body.developer
+    } if (req.body.publisher != null) {
+        res.game.publisher = req.body.publisher
+    } if (req.body.platforms != null) {
+        res.game.platforms = req.body.platforms
+    } if (req.body.release_date != null) {
+        res.game.release_date = req.body.release_date
+    } if (req.body.genre != null) {
+        res.game.genre = req.body.genre
+    } if (req.body.description != null) {
+        res.game.description = req.body.description
+    }
+    try {
+        const updatedGame = await res.game.save()
+        res.json(updatedGame)
+    } catch (err) {
+        res.status(400).json({message: err.message})
+    }
+})
 
 // Separate function to get a single game by it's id in the document. This game object is passed as middleware for REST functions.
 async function getGame(req, res, next) {
