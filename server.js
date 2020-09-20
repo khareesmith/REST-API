@@ -26,13 +26,15 @@ db.once('open', () => {
 // Allows information passed through application to be used as JSON object
 app.use(express.json())
 
-// Variables to allow routing for different REST endpoints. Currently routes to index and games
+// Variables to allow routing for different REST endpoints. Currently routes to index, games, and developers
 const indexRouter = require('./routes/index')
 const gameRouter = require('./routes/games')
+const developerRouter = require('./routes/developers')
 
-// Tells application to use the indexRouter to point to root and gameRouter to point to the '/game' route
+// Tells application to use the indexRouter to point to root, gameRouter to point to the '/games' route, and developerRouter to point to '/developers' route
 app.use('/', indexRouter)
 app.use('/games', gameRouter)
+app.use('/developers', developerRouter)
 
 // Creates a server that listens with the app variable on the port; success displays message in console. On error, resulting error is logged to console
 app.listen(port, (err) => {

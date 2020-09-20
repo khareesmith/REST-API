@@ -1,6 +1,5 @@
-const { json } = require('express')
+// Variables to set-up game router. Sets up a Games variable to use the game schema in the models directory
 const express = require('express')
-const { remove } = require('../models/game')
 const router = express.Router()
 const Games = require('../models/game')
 
@@ -17,7 +16,7 @@ router.get('/', async (req, res) => {
 // Route to get one game on the server
 router.get('/:id', getGame, async (req, res) => {
     try {
-    await res.send(res.game)
+    await res.json(res.game)
     } catch (err) {
         res.status(500).json({message: err.message})
     }

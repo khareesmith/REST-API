@@ -11,4 +11,4 @@ const gamesSchema = new mongoose.Schema({
     description: {type: String, required: true}
 })
 
-module.exports = mongoose.model('Game', gamesSchema)
+module.exports = mongoose.model('Games', gamesSchema)
